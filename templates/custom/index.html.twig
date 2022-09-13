@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CustomController!
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div>
+			{% include "shared/_sidebarProfile.html.twig" %}
+		</div>
+
+		<h1>Register</h1>
+		<div class="row">
+			{{ form_start(form) }}
+
+			<label>
+				Votre logo
+			</label>
+			{{ form_widget(form.logo) }}
+			<label>
+				Votre couleur primaire
+			</label>
+			{{ form_widget(form.color1 )}}
+			<label>
+				Votre couleur secondaire
+			</label>
+			{{ form_widget(form.color2 )}}
+			<label>
+				Votre couleur tertiaire
+			</label>
+			{{ form_widget(form.color3 )}}
+			<label>
+				Votre titre
+			</label>
+			{{ form_widget(form.title) }}
+			<button type="submit" class="btn btn-success">Register</button>
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+
+{% endblock %}
