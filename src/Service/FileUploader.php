@@ -17,7 +17,7 @@ class FileUploader extends AbstractController
     {
         $this->slugger = $slugger;
     }
-
+    //@info Logo client
     public function upload(UploadedFile $file)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -26,6 +26,22 @@ class FileUploader extends AbstractController
 
         try {
             $file->move($this->getParameter('logoClients_directory'), $fileName);
+        } catch (FileException $e) {
+            //TODO
+        }
+
+        return $fileName;
+    }
+
+    //@info pictures profil
+    public function uploadProfilPicture(UploadedFile $file)
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+        try {
+            $file->move($this->getParameter('picturesProfile_directory'), $fileName);
         } catch (FileException $e) {
             //TODO
         }

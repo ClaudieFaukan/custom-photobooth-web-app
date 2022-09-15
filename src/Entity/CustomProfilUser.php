@@ -31,6 +31,12 @@ class CustomProfilUser
     #[ORM\ManyToOne(inversedBy: 'customProfil')]
     private ?User $userPropriety = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pictureProfil = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pictureProfilBackground = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +110,30 @@ class CustomProfilUser
     public function setUserPropriety(?User $userPropriety): self
     {
         $this->userPropriety = $userPropriety;
+
+        return $this;
+    }
+
+    public function getPictureProfil(): ?string
+    {
+        return $this->pictureProfil;
+    }
+
+    public function setPictureProfil(?string $pictureProfil): self
+    {
+        $this->pictureProfil = $pictureProfil;
+
+        return $this;
+    }
+
+    public function getPictureProfilBackground(): ?string
+    {
+        return $this->pictureProfilBackground;
+    }
+
+    public function setPictureProfilBackground(?string $pictureProfilBackground): self
+    {
+        $this->pictureProfilBackground = $pictureProfilBackground;
 
         return $this;
     }

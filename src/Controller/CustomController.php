@@ -5,6 +5,8 @@ namespace App\Controller;
 use Exception;
 use App\Entity\CustomProfilUser;
 use App\Form\CustomProfilUserType;
+use App\Form\ProfilPictureType;
+use App\Service\CustomProfile;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +19,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CustomController extends AbstractController
 {
     #[Route('/profile/custom', name: 'app_custom')]
-    public function index(EntityManagerInterface $em, Request $request, SluggerInterface $slugger, FileUploader $file): Response
+    public function index(EntityManagerInterface $em, Request $request, FileUploader $file, CustomProfile $customProfile): Response
     {
+        $sideBarProfil = $customProfile->getSideBar($this->getUser(), $request);
+
         $optionsUser = new CustomProfilUser;
         $optionsUser->setUserPropriety($this->getUser());
         $form = $this->createForm(CustomProfilUserType::class, $optionsUser);
         $form->handleRequest($request);
+        $pictureProfilForm = $this->createForm(ProfilPictureType::class, $optionsUser);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -43,6 +48,8 @@ class CustomController extends AbstractController
 
         return $this->render('custom/index.html.twig', [
             'form' => $form->createView(),
+            'customProfil' => $sideBarProfil["customProfil"],
+            'pictureProfilView' => $sideBarProfil["pictureProfilView"]
         ]);
     }
 }

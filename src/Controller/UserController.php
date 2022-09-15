@@ -2,17 +2,34 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\UserOfClient;
+use App\Form\ClientOfUserType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    #[Route('/profile/user/add', name: 'app_add_user')]
+    public function add(Request $request, EntityManagerInterface $em): Response
     {
+        $userOfClient = new UserOfClient();
+        $clientForm = $this->createForm(ClientOfUserType::class, $userOfClient);
+        $clientForm->handleRequest($request);
+
+        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
+
+            $userOfClient->setUserPropriety($this->getUser());
+            $em->persist($userOfClient);
+            $em->flush();
+
+            $this->addFlash("success", "Client ajouter");
+        }
+
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'clientForm' => $clientForm->createView(),
         ]);
     }
 }

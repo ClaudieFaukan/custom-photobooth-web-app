@@ -12,16 +12,31 @@
 		{% block stylesheets %}
 			<link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.min.css">
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		{% block javascripts %}
+			<script scr="{{asset('assets/js/jquery.min.js')}}"></script>
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
 	<body>
 		{% include "shared/_navbar.html.twig" %}
+		{% for rubrique, messages in app.flashes %}
+			<div class="alert alert-{{rubrique}}" id="flashMessages">
+				{% for message in messages %}
+					<p>{{message}}</p>
+				{% endfor %}
+			</div>
+		{% endfor %}
 		{% block body %}{% endblock %}
 
 	</body>
+	<script>
+		let element = document.getElementById("flashMessages");
+if (element != null) {
+$("#flashMessages").slideUp(5000);
+}
+	</script>
 </html>
