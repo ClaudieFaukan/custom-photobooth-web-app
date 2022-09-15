@@ -9,14 +9,14 @@
 		<div class="custom-menu">
 			<button type="button" id="sidebarCollapse" class="btn btn-primary"></button>
 		</div>
-		{% if customProfil.pictureProfil != null %}
-			{% set pictureProfil = customProfil.pictureProfil %}
+		{% if sideBar.customProfil.pictureProfil != null %}
+			{% set pictureProfil = sideBar.customProfil.pictureProfil %}
 		{% else %}
 			{% set pictureProfil = 'assets/images/logo.jpg' %}
 		{% endif %}
 
-		{% if customProfil.pictureProfilBackground != null %}
-			{% set pictureProfilBackground = customProfil.pictureProfilBackground %}
+		{% if sideBar.customProfil.pictureProfilBackground != null %}
+			{% set pictureProfilBackground = sideBar.customProfil.pictureProfilBackground %}
 		{% else %}
 			{% set pictureProfilBackground = 'assets/images/bg_1.jpg' %}
 		{% endif %}
@@ -80,16 +80,16 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					{{ form_start(pictureProfilView)}}
+					{{ form_start(sideBar.pictureProfilView)}}
 					<label>Changer la photo de profil</label>
-					{{ form_widget(pictureProfilView.pictureProfil, {'attr': {'class': 'form-control'}}) }}
+					{{ form_widget(sideBar.pictureProfilView.pictureProfil, {'attr': {'class': 'form-control'}}) }}
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 					<button type="submit" class="btn btn-primary">Sauvegarder</button>
 				</div>
-				{{ form_end(pictureProfilView)}}
+				{{ form_end(sideBar.pictureProfilView)}}
 			</div>
 		</div>
 	</div>

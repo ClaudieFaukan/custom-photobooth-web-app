@@ -31,7 +31,7 @@ class CustomProfile extends AbstractController
     public function getSideBar(User $user, Request $request)
     {
         $customProfilOriginal = clone ($this->customRepository->findOneBy(["userPropriety" => $this->getUser()]));
-        $copyCustomProfil = self::getCustomProfil($user);
+        $copyCustomProfil = $this->getCustomProfil($user);
 
         $pictureProfilForm = $this->createForm(ProfilPictureType::class, $copyCustomProfil);
         $pictureProfilForm->handleRequest($request);

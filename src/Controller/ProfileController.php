@@ -19,14 +19,13 @@ class ProfileController extends AbstractController
 {
 
     #[Route('/', name: 'index')]
-    public function index(CustomProfile $customProfile, Request $request, EntityManagerInterface $em, CustomProfilUserRepository $customRepository): Response
+    public function index(CustomProfile $customProfile, Request $request): Response
     {
 
         $sideBarProfil = $customProfile->getSideBar($this->getUser(), $request);
 
         return $this->render('profile/index.html.twig', [
-            'customProfil' => $sideBarProfil["customProfil"],
-            'pictureProfilView' => $sideBarProfil["pictureProfilView"]
+            'sideBar' => $sideBarProfil,
         ]);
     }
 

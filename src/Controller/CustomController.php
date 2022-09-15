@@ -48,8 +48,7 @@ class CustomController extends AbstractController
 
         return $this->render('custom/index.html.twig', [
             'form' => $form->createView(),
-            'customProfil' => $sideBarProfil["customProfil"],
-            'pictureProfilView' => $sideBarProfil["pictureProfilView"]
+            'sideBar' => $sideBarProfil,
         ]);
     }
 }
