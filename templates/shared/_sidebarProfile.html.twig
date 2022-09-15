@@ -11,8 +11,10 @@
 		</div>
 		{% if sideBar.customProfil.pictureProfil != null %}
 			{% set pictureProfil = sideBar.customProfil.pictureProfil %}
+			{% set pathPictureProfil = "uploads/picturesProfile/"%}
 		{% else %}
-			{% set pictureProfil = 'assets/images/logo.jpg' %}
+			{% set pathPictureProfil = 'assets/images/'%}
+			{% set pictureProfil = 'logo.jpg' %}
 		{% endif %}
 
 		{% if sideBar.customProfil.pictureProfilBackground != null %}
@@ -23,7 +25,7 @@
 
 		<div class="img bg-wrap text-center py-4" style="background-image: url('{{ asset(pictureProfilBackground)}}');">
 			<div class="user-logo">
-				<div class="img" style="background-image: url(' {{ asset( pictureProfil ) }}');">
+				<div class="img" style="background-image: url(' {{ asset( pathPictureProfil ~ pictureProfil ) }}');">
 					<span type="button" class="fa fa-paint-brush d-flex align-items-end flex-column mb-3" data-toggle="modal" data-target="#ModalCenter"></span>
 				</div>
 				<h3>{{ app.user.firstName }}

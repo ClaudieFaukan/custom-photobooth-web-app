@@ -20,7 +20,7 @@ class CustomProfile extends AbstractController
 
 
 
-    public function __construct(protected CustomProfilUserRepository $customRepository, protected FileUploader $file, EntityManagerInterface $em)
+    public function __construct(protected CustomProfilUserRepository $customRepository, protected FileUploader $file, protected EntityManagerInterface $em)
     {
     }
     /**
@@ -38,13 +38,15 @@ class CustomProfile extends AbstractController
 
         if ($pictureProfilForm->isSubmitted() && $pictureProfilForm->isValid()) {
 
-            $customProfil = $this->customProfile->savePictureProfil($copyCustomProfil, $pictureProfilForm);
-            unlink(UserConstante::PICTURES_PROFIL_DIRECTORY . $customProfilOriginal->getPictureProfil());
+            $customProfil = $this->savePictureProfil($copyCustomProfil, $pictureProfilForm);
+            if ($customProfilOriginal->getPictureProfil() != null) {
+                unlink(UserConstante::PICTURES_PROFIL_DIRECTORY . $customProfilOriginal->getPictureProfil());
+            }
             $customProfilOriginal = $copyCustomProfil;
             $this->em->persist($customProfil);
             $this->em->flush();
         }
-        $customProfilOriginal->setPictureProfil(UserConstante::PICTURES_PROFIL_DIRECTORY . $customProfilOriginal->getPictureProfil());
+        //$customProfilOriginal->setPictureProfil(UserConstante::PICTURES_PROFIL_DIRECTORY . $customProfilOriginal->getPictureProfil());
         return ["customProfil" => $customProfilOriginal, "pictureProfilView" => $pictureProfilForm->createView()];
     }
 
