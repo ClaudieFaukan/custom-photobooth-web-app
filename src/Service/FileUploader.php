@@ -34,14 +34,29 @@ class FileUploader extends AbstractController
     }
 
     //@info pictures profil
-    public function uploadProfilPicture(UploadedFile $file)
+    public function uploadPicture(UploadedFile $file, Componant $componant)
     {
+        if ($componant == Componant::PicturesProfil) {
+
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $this->slugger->slug($originalFilename);
+            $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+            try {
+                $file->move($this->getParameter('picturesProfile_directory'), $fileName);
+            } catch (FileException $e) {
+                //TODO
+            }
+
+            return $fileName;
+        }
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
+
         try {
-            $file->move($this->getParameter('picturesProfile_directory'), $fileName);
+            $file->move($this->getParameter('pictureProfilBackground_directory'), $fileName);
         } catch (FileException $e) {
             //TODO
         }

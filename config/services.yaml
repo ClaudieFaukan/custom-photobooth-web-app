@@ -6,6 +6,7 @@
 parameters:
     logoClients_directory: '%kernel.project_dir%/public/uploads/logoClients'
     picturesProfile_directory: '%kernel.project_dir%/public/uploads/picturesProfile'
+    pictureProfilBackground_directory: '%kernel.project_dir%/public/uploads/pictureProfilBackground'
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -4,35 +4,74 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
 {% endblock %}
+
+{# Initialisation des variables #}
+{# picture profil #}
+{% if sideBar.customProfil.pictureProfil != null %}
+
+	{% set pictureProfil = sideBar.customProfil.pictureProfil %}
+	{% set pathPictureProfil = "uploads/picturesProfile/"%}
+
+{% else %}
+
+	{% set pathPictureProfil = 'assets/images/'%}
+	{% set pictureProfil = 'logo.jpg' %}
+
+{% endif %}
+
+{% if sideBar.customProfil.pictureProfilBackground != null %}
+
+	{% set pictureProfilBackground = sideBar.customProfil.pictureProfilBackground %}
+
+{% else %}
+
+	{% set pictureProfilBackground = 'assets/images/bg_1.jpg' %}
+
+{% endif %}
+
+{# Background profil #}
+{% if sideBar.customProfil.pictureProfilBackground != null %}
+
+	{% set pictureProfilBackground = sideBar.customProfil.pictureProfilBackground %}
+	{% set pathPictureProfilBackground = "uploads/pictureProfilBackground/"%}
+
+{% else %}
+
+	{% set pathPictureProfilBackground = 'assets/images/'%}
+	{% set pictureProfilBackground = 'bg_1.jpg' %}
+
+{% endif %}
+
+{# Fin de l'Initialisation #}
 <div id="container-sidebar">
+
 	<nav id="sidebar" class="bg-red">
-		<div class="custom-menu">
-			<button type="button" id="sidebarCollapse" class="btn btn-primary"></button>
-		</div>
-		{% if sideBar.customProfil.pictureProfil != null %}
-			{% set pictureProfil = sideBar.customProfil.pictureProfil %}
-			{% set pathPictureProfil = "uploads/picturesProfile/"%}
-		{% else %}
-			{% set pathPictureProfil = 'assets/images/'%}
-			{% set pictureProfil = 'logo.jpg' %}
-		{% endif %}
 
-		{% if sideBar.customProfil.pictureProfilBackground != null %}
-			{% set pictureProfilBackground = sideBar.customProfil.pictureProfilBackground %}
-		{% else %}
-			{% set pictureProfilBackground = 'assets/images/bg_1.jpg' %}
-		{% endif %}
+		<div class="img bg-wrap text-center py-4" style="background-image: url('{{ asset(pathPictureProfilBackground ~ pictureProfilBackground) }} ');">
 
-		<div class="img bg-wrap text-center py-4" style="background-image: url('{{ asset(pictureProfilBackground)}}');">
+			<div class="custom-menu">
+
+				<button type="button" id="sidebarCollapse" class="btn btn-primary"></button>
+
+			</div>
+
 			<div class="user-logo">
+
 				<div class="img" style="background-image: url(' {{ asset( pathPictureProfil ~ pictureProfil ) }}');">
+
 					<span type="button" class="fa fa-paint-brush d-flex align-items-end flex-column mb-3" data-toggle="modal" data-target="#ModalCenter"></span>
+
 				</div>
+
 				<h3>{{ app.user.firstName }}
 					{{ app.user.lastName }}</h3>
+
 			</div>
+
 		</div>
+
 		<ul class="list-unstyled components mb-5">
+
 			<li>
 				<a href="{{ path("profile_index")}}">
 					<span class="fa fa-home mr-3"></span>
@@ -70,31 +109,67 @@
 					<span class="fa fa-sign-out mr-3"></span>
 					Deconnexion</a>
 			</li>
+
 		</ul>
+
 	</nav>
+
+	{# Modal de personnalisation #}
+
 	<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
 		<div class="modal-dialog modal-dialog-centered" role="document">
+
 			<div class="modal-content">
+
 				<div class="modal-header">
+
 					<h5 class="modal-title" id="exampleModalLongTitle">Personnalisation profil</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-				</div>
-				<div class="modal-body">
-					{{ form_start(sideBar.pictureProfilView)}}
-					<label>Changer la photo de profil</label>
-					{{ form_widget(sideBar.pictureProfilView.pictureProfil, {'attr': {'class': 'form-control'}}) }}
 
 				</div>
+
+				<div class="modal-body">
+
+					<div class="form-group row">
+						<div class="col">
+							{{ form_start(sideBar.pictureProfilView)}}
+							<label class="col-form-label">Changer la photo de profil</label>
+							{{ form_widget(sideBar.pictureProfilView.pictureProfil, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="col">
+							<div class="img modal-content" style="background-image: url(' {{ asset( pathPictureProfil ~ pictureProfil ) }}'); width:75px; height:75px"></div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col">
+							<label class="col-form-label">Changer l'image de fond
+							</label>
+							{{ form_widget(sideBar.pictureProfilView.pictureProfilBackground, {'attr': {'class': 'form-control'}}) }}
+						</div>
+
+					</div>
+
+				</div>
+
 				<div class="modal-footer">
+
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 					<button type="submit" class="btn btn-primary">Sauvegarder</button>
+
 				</div>
+
 				{{ form_end(sideBar.pictureProfilView)}}
+
 			</div>
+
 		</div>
+
 	</div>
+
 </div>
 
 {% block javascript %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\navbar;
 
 use App\Entity\CustomProfilUser;
 use Symfony\Component\Form\AbstractType;
@@ -16,18 +16,39 @@ class ProfilPictureType extends AbstractType
         $builder->add(
             'pictureProfil',
             FileType::class,
-            ['constraints' => [
-                new File([
-                    'maxSize' => '20048k',
-                    'mimeTypes' => [
-                        'image/png',
-                        'image/jpg',
-                        'image/jpeg',
-                        'image/webp',
-                    ],
-                    'mimeTypesMessage' => 'Please upload a valid document',
-                ])
-            ],]
+            [
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20048k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid document',
+                    ])
+                ],
+            ]
+        )->add(
+            'pictureProfilBackground',
+            FileType::class,
+            [
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20048k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid document',
+                    ])
+                ],
+            ]
         );
     }
 

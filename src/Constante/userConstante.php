@@ -5,4 +5,5 @@ class UserConstante
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER =  'ROLE_USER';
     const PICTURES_PROFIL_DIRECTORY = "uploads/picturesProfile/";
+    const BACKGROUND_PROFIL_DIRECTORY = "uploads/picturesBackgroundProfile/";
 }
