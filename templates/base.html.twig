@@ -34,9 +34,14 @@
 
 	</body>
 	<script>
-		let element = document.getElementById("flashMessages");
-if (element != null) {
-$("#flashMessages").slideUp(5000);
-}
+		$(document).ready(function () {
+setTimeout(() => {
+element = document.getElementById('flashMessages');
+element.remove();
+}, 3000);
+
+});
 	</script>
+
+
 </html>

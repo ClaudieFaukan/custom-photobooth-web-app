@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserOfClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserOfClientRepository::class)]
@@ -18,6 +20,10 @@ class UserOfClient
 
     #[ORM\ManyToOne(inversedBy: 'clients')]
     private ?User $userPropriety = null;
+
+    #[ORM\ManyToOne(inversedBy: 'userOfClients')]
+    private ?TemplateFormat $templateFormat = null;
+
 
     public function getId(): ?int
     {
@@ -44,6 +50,18 @@ class UserOfClient
     public function setUserPropriety(?User $userPropriety): self
     {
         $this->userPropriety = $userPropriety;
+
+        return $this;
+    }
+
+    public function getTemplateFormat(): ?TemplateFormat
+    {
+        return $this->templateFormat;
+    }
+
+    public function setTemplateFormat(?TemplateFormat $templateFormat): self
+    {
+        $this->templateFormat = $templateFormat;
 
         return $this;
     }

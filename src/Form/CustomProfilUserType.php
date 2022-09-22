@@ -21,18 +21,22 @@ class CustomProfilUserType extends AbstractType
             ->add(
                 'logo',
                 FileType::class,
-                ['constraints' => [
-                    new File([
-                        'maxSize' => '20048k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpg',
-                            'image/jpeg',
-                            'image/webp',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid document',
-                    ])
-                ],]
+                [
+
+                    'required' => false,
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '20048k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpg',
+                                'image/jpeg',
+                                'image/webp',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid document',
+                        ])
+                    ],
+                ]
             )
             ->add('color1', ColorType::class, [
 

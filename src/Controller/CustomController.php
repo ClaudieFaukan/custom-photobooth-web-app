@@ -6,6 +6,7 @@ use Exception;
 use App\Entity\CustomProfilUser;
 use App\Form\CustomProfilUserType;
 use App\Form\ProfilPictureType;
+use App\Repository\CustomProfilUserRepository;
 use App\Service\CustomProfile;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,15 +20,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CustomController extends AbstractController
 {
     #[Route('/profile/custom', name: 'app_custom')]
-    public function index(EntityManagerInterface $em, Request $request, FileUploader $file, CustomProfile $customProfile): Response
+    public function index(EntityManagerInterface $em, Request $request, FileUploader $file, CustomProfile $customProfile, CustomProfilUserRepository $customProfil): Response
     {
         $sideBarProfil = $customProfile->getSideBar($this->getUser(), $request);
 
-        $optionsUser = new CustomProfilUser;
-        $optionsUser->setUserPropriety($this->getUser());
+        $optionsUser = $customProfil->findOneBy(["userPropriety" => $this->getUser()]);
+        $logoOriginal = $optionsUser->getLogo();
+        $optionsUser->setLogo("");
         $form = $this->createForm(CustomProfilUserType::class, $optionsUser);
         $form->handleRequest($request);
-        $pictureProfilForm = $this->createForm(ProfilPictureType::class, $optionsUser);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -38,6 +39,8 @@ class CustomController extends AbstractController
 
                 $fileName = $file->upload($logo);
                 $optionsUser->setLogo($fileName);
+            } else {
+                $optionsUser->setLogo($logoOriginal);
             }
 
             $em->persist($optionsUser);

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\UserOfClient;
 use App\Form\ClientOfUserType;
+use App\Service\CustomProfile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     #[Route('/profile/user/add', name: 'app_add_user')]
-    public function add(Request $request, EntityManagerInterface $em): Response
+    public function add(Request $request, EntityManagerInterface $em, CustomProfile $customProfile): Response
     {
+        /** @var User */
+        $user = $this->getUser();
+        $sideBar = $customProfile->getSideBar($this->getUser(), $request);
         $userOfClient = new UserOfClient();
         $clientForm = $this->createForm(ClientOfUserType::class, $userOfClient);
         $clientForm->handleRequest($request);
@@ -29,6 +33,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/index.html.twig', [
+            'sideBar' => $sideBar,
             'clientForm' => $clientForm->createView(),
         ]);
     }
