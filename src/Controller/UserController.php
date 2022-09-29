@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\UserOfClient;
 use App\Form\ClientOfUserType;
+use App\Form\UserOfClientType;
+use App\Repository\TemplateThemeRepository;
 use App\Service\CustomProfile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,13 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     #[Route('/profile/user/add', name: 'app_add_user')]
-    public function add(Request $request, EntityManagerInterface $em, CustomProfile $customProfile): Response
+    public function add(Request $request, EntityManagerInterface $em, CustomProfile $customProfile, TemplateThemeRepository $templatesRepository): Response
     {
-        /** @var User */
-        $user = $this->getUser();
         $sideBar = $customProfile->getSideBar($this->getUser(), $request);
         $userOfClient = new UserOfClient();
-        $clientForm = $this->createForm(ClientOfUserType::class, $userOfClient);
+        $clientForm = $this->createForm(UserOfClientType::class, $userOfClient);
         $clientForm->handleRequest($request);
 
         if ($clientForm->isSubmitted() && $clientForm->isValid()) {
